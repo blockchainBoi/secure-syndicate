@@ -1,9 +1,11 @@
 import { WalletConnect } from "@/components/WalletConnect";
+import { ContractInteraction } from "@/components/ContractInteraction";
 import { DashboardStats } from "@/components/DashboardStats";
 import { PropertyCard } from "@/components/PropertyCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Eye, TrendingUp } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Shield, Eye, TrendingUp, Lock, Users } from "lucide-react";
 import heroImage from "@/assets/real-estate-hero.jpg";
 import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
@@ -53,10 +55,10 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-accent to-accent/80 rounded-lg flex items-center justify-center">
-                <Shield className="h-4 w-4 text-accent-foreground" />
+              <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <Lock className="h-4 w-4 text-white" />
               </div>
-              <h1 className="text-xl font-bold text-foreground">SyndicateVault</h1>
+              <h1 className="text-xl font-bold text-foreground">Secure Syndicate</h1>
             </div>
             <WalletConnect />
           </div>
@@ -146,27 +148,49 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Dashboard Stats */}
+      {/* Main Content with Tabs */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <DashboardStats />
-      </section>
-
-      {/* Properties Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-foreground mb-3">
-            Active Syndicated Properties
-          </h2>
-          <p className="text-muted-foreground">
-            High-quality real estate investments with aggregated ownership data
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {properties.map((property) => (
-            <PropertyCard key={property.id} {...property} />
-          ))}
-        </div>
+        <Tabs defaultValue="dashboard" className="w-full">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="dashboard" className="flex items-center gap-2">
+              <TrendingUp className="h-4 w-4" />
+              Dashboard
+            </TabsTrigger>
+            <TabsTrigger value="contracts" className="flex items-center gap-2">
+              <Lock className="h-4 w-4" />
+              Encrypted Contracts
+            </TabsTrigger>
+            <TabsTrigger value="properties" className="flex items-center gap-2">
+              <Users className="h-4 w-4" />
+              Properties
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="dashboard" className="mt-8">
+            <DashboardStats />
+          </TabsContent>
+          
+          <TabsContent value="contracts" className="mt-8">
+            <ContractInteraction />
+          </TabsContent>
+          
+          <TabsContent value="properties" className="mt-8">
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-foreground mb-3">
+                Active Syndicated Properties
+              </h2>
+              <p className="text-muted-foreground">
+                High-quality real estate investments with encrypted ownership data
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {properties.map((property) => (
+                <PropertyCard key={property.id} {...property} />
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
       </section>
     </div>
   );

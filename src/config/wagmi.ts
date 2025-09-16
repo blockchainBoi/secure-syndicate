@@ -1,18 +1,10 @@
-import { createConfig, http } from 'wagmi';
+import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { sepolia } from 'wagmi/chains';
-import { injected, metaMask, walletConnect } from 'wagmi/connectors';
 import { config as envConfig } from './env';
 
-export const wagmiConfig = createConfig({
+export const wagmiConfig = getDefaultConfig({
+  appName: 'Secure Syndicate',
+  projectId: envConfig.walletConnectProjectId,
   chains: [sepolia],
-  connectors: [
-    injected(),
-    metaMask(),
-    walletConnect({
-      projectId: envConfig.walletConnectProjectId,
-    }),
-  ],
-  transports: {
-    [sepolia.id]: http(envConfig.rpcUrl),
-  },
+  ssr: false,
 });
